@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLOW 농구 동아리 소개</title>
+    <style>
+        /* 기본 스타일 초기화 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* 어두운 배경 */
+            color: #fff; /* 흰색 글씨 */
+            line-height: 1.6;
+        }
+
+        /* 헤더 스타일 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #fff; /* 흰색 글씨 */
+            font-size: 2.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        /* 메뉴 버튼 */
+        .menu-button-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .menu-button {
+            background: #fff; /* 흰색 배경 */
+            border: none;
+            color: black;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .menu-button:hover {
+            background-color: #000; /* 검정색 배경 */
+            color: white; /* 흰색 글씨 */
+            transition: all 0.3s ease;
+        }
+
+        /* 메뉴 스타일 */
+        .menu {
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 5px;
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            margin: 12px 0;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        .menu a:hover {
+            color: #FF7F50; /* 밝은 오렌지 색상으로 변경 */
+        }
+
+        /* 팀 소개 섹션 */
+        .team-intro {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* 화면 전체 높이 */
+            text-align: center;
+            padding: 20px;
+            background-color: #121212;
+        }
+
+        .team-intro .intro-text {
+            width: 50%;
+            text-align: left;
+            color: #dcdcdc;
+            font-size: 1.2em;
+            word-wrap: break-word; /* 줄바꿈을 자연스럽게 처리 */
+        }
+
+        .team-intro h2 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .team-intro p {
+            margin-bottom: 20px; /* 문단 간격 추가 */
+        }
+
+        .team-intro img {
+            max-width: 45%;
+            height: auto;
+            border-radius: 15px; /* 사진 테두리에 라운드 추가 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 마우스 아이콘 */
+        .basketball-icon {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .menu-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+
+            .team-intro {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .team-intro .intro-text {
+                width: 100%;
+                font-size: 1.1em;
+            }
+
+            .team-intro img {
+                width: 80%;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 onclick="window.location.href='index.html'">GLOW</h1>
+        <!-- 메뉴 버튼을 화면 가운데로 배치 -->
+        <div class="menu-button-container">
+            <button class="menu-button" id="menuButton">MENU</button>
+        </div>
+    </header>
+
+    <!-- 메뉴 -->
+    <div class="menu" id="menu">
+        <a href="introduce.html">Introduce</a>
+        <a href="schedules.html">Schedules</a>
+        <a href="training.html">Training</a>
+        <a href="contact_us.html">Contact Us</a>
+        <a href="covenant.html">Covenant</a>
+    </div>
+
+    <!-- 마우스 따라오는 농구공 아이콘 -->
+    <img src="./images/basketball_icon.png" alt="Basketball Icon" class="basketball-icon" id="basketballIcon">
+
+    <!-- GLOW 팀 소개 섹션 -->
+    <section class="team-intro">
+        <div class="intro-text">
+            <h2>GLOW 농구 동아리 소개</h2>
+            <p>GLOW는 농구를 사랑하는 학생들이 모인 팀입니다. 다양한 실력을 가진 멤버들이 모여 서로 협력하고 성장하며 즐거운 농구 활동을 이어가고 있습니다. 우리는 농구를 통해 팀워크와 리더십을 배우고, 더 나아가 지역 사회와 함께하는 다양한 활동을 계획하고 있습니다.</p>
+            <p>GLOW는 단순한 농구팀을 넘어서, 서로를 존중하고 지원하는 커뮤니티를 목표로 하고 있습니다. 팀의 모든 멤버들은 서로 다른 배경을 가지고 있지만, 농구라는 공통의 목표를 통해 하나로 뭉칩니다.</p>
+        </div>
+        <img src="./images/team_photo.jpg" alt="GLOW Team" />
+    </section>
+
+    <script>
+        // 메뉴 버튼 클릭 시 메뉴 표시/숨기기
+        const menuButton = document.getElementById('menuButton');
+        const menu = document.getElementById('menu');
+
+        menuButton.addEventListener('click', () => {
+            menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'flex' : 'none';
+        });
+
+        // 마우스 따라오는 농구공 아이콘
+        const basketballIcon = document.getElementById('basketballIcon');
+        document.addEventListener('mousemove', (event) => {
+            basketballIcon.style.top = `${event.clientY}px`;
+            basketballIcon.style.left = `${event.clientX}px`;
+        });
+    </script>
+</body>
+</html>

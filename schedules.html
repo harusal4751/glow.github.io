@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLOW 농구 동아리 일정</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* 어두운 배경 */
+            color: #fff; /* 흰색 글씨 */
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 2.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .menu-button-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .menu-button {
+            background: #fff;
+            border: none;
+            color: black;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .menu-button:hover {
+            background-color: #000;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .menu {
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 5px;
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            margin: 12px 0;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        .menu a:hover {
+            color: #FF7F50;
+        }
+
+        .calendar-container {
+            padding: 20px;
+            width: 90%;
+        }
+
+        .calendar-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .calendar .day {
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .calendar .day:hover {
+            background-color: #FF7F50;
+        }
+
+        .selected-day {
+            background-color: #FF7F50;
+        }
+
+        .schedule-input {
+            margin-top: 20px;
+            display: none;
+            position: relative;
+            text-align: left;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        .schedule-input textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .schedule-input button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #FF7F50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .schedule-input button:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* X 버튼 (입력창 닫기) */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 18px;
+            background-color: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .basketball-icon {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+
+        /* 세련된 화살표 버튼 */
+        .calendar-controls button {
+            background-color: transparent;
+            border: 2px solid #FF7F50;
+            color: #FF7F50;
+            padding: 10px;
+            font-size: 1.5em;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-controls button:hover {
+            background-color: #FF7F50;
+            color: #fff;
+        }
+
+        .calendar-controls button i {
+            font-size: 1.5em;
+        }
+
+        /* 아이콘 애니메이션 */
+        .calendar-controls button:hover i {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .menu-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+
+            .calendar {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .schedule-input textarea {
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 onclick="window.location.href='index.html'">GLOW</h1>
+        <div class="menu-button-container">
+            <button class="menu-button" id="menuButton">MENU</button>
+        </div>
+    </header>
+
+    <div class="menu" id="menu">
+        <a href="introduce.html">Introduce</a>
+        <a href="schedules.html">Schedules</a>
+        <a href="training.html">Training</a>
+        <a href="contact_us.html">Contact Us</a>
+        <a href="covenant.html">Covenant</a>
+    </div>
+
+    <!-- 마우스 농구공 아이콘 -->
+    <img src="./images/basketball_icon.png" alt="Basketball Icon" class="basketball-icon" id="basketballIcon">
+
+    <!-- 캘린더 섹션 -->
+    <section class="calendar-container">
+        <h2>농구 경기 일정</h2>
+
+        <!-- 캘린더 조정 버튼 -->
+        <div class="calendar-controls">
+            <button onclick="navigateMonth(-1)">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <span id="calendarTitle"></span>
+            <button onclick="navigateMonth(1)">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- 캘린더 -->
+        <div class="calendar" id="calendar"></div>
+
+        <!-- 일정 입력 폼 -->
+        <div class="schedule-input" id="scheduleInput">
+            <button class="close-btn" onclick="closeScheduleInput()">X</button>
+            <h3>경기 일정을 입력하세요</h3>
+            <textarea id="scheduleText"></textarea>
+            <button onclick="saveSchedule()">일정 저장</button>
+        </div>
+    </section>
+
+    <script>
+        const menuButton = document.getElementById('menuButton');
+        const menu = document.getElementById('menu');
+        const basketballIcon = document.getElementById('basketballIcon');
+        const calendarElement = document.getElementById('calendar');
+        const scheduleInput = document.getElementById('scheduleInput');
+        const scheduleText = document.getElementById('scheduleText');
+        const calendarTitle = document.getElementById('calendarTitle');
+        let currentDate = new Date();
+        let selectedDate = null;
+        let scheduleData = JSON.parse(localStorage.getItem('scheduleData')) || {};
+
+        // 메뉴 버튼 클릭 시 메뉴 토글
+        menuButton.addEventListener('click', () => {
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // 마우스 따라 농구공 아이콘
+        document.addEventListener('mousemove', (e) => {
+            basketballIcon.style.left = `${e.pageX}px`;
+            basketballIcon.style.top = `${e.pageY}px`;
+        });
+
+        // 달력 생성 함수
+        function generateCalendar(month, year) {
+            calendarElement.innerHTML = '';
+            calendarTitle.textContent = `${year}년 ${month + 1}월`;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // 빈 공간을 만들어서 달력의 첫 번째 날짜 맞추기
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                calendarElement.appendChild(emptyDay);
+            }
+
+            // 날짜들 추가
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('day');
+                dayElement.textContent = i;
+                dayElement.onclick = () => openScheduleInput(i);
+
+                if (selectedDate === i) {
+                    dayElement.classList.add('selected-day');
+                }
+
+                calendarElement.appendChild(dayElement);
+            }
+
+            // 5주 이상 있는 달일 경우 빈 줄 추가
+            if (daysInMonth + firstDay > 35) {
+                const extraEmptyDay = document.createElement('div');
+                calendarElement.appendChild(extraEmptyDay);
+            }
+        }
+
+        // 일정 입력 창 열기
+        function openScheduleInput(day) {
+            selectedDate = day;
+            scheduleInput.style.display = 'block';
+        }
+
+        // 일정 저장
+        function saveSchedule() {
+            const schedule = scheduleText.value.trim();
+            if (schedule !== '') {
+                if (!scheduleData[selectedDate]) {
+                    scheduleData[selectedDate] = [];
+                }
+                scheduleData[selectedDate].push(schedule);
+                localStorage.setItem('scheduleData', JSON.stringify(scheduleData)); // 로컬 저장소에 저장
+                renderSchedules();
+            }
+            scheduleInput.style.display = 'none';
+            scheduleText.value = '';
+        }
+
+        // 일정 렌더링
+        function renderSchedules() {
+            const days = document.querySelectorAll('.day');
+            days.forEach((day) => {
+                const dayNumber = parseInt(day.textContent);
+                if (scheduleData[dayNumber]) {
+                    const scheduleList = document.createElement('div');
+                    scheduleData[dayNumber].forEach((schedule) => {
+                        const scheduleItem = document.createElement('div');
+                        scheduleItem.textContent = schedule;
+                        scheduleList.appendChild(scheduleItem);
+                    });
+                    day.appendChild(scheduleList);
+                }
+            });
+        }
+
+        // 일정 입력창 닫기
+        function closeScheduleInput() {
+            scheduleInput.style.display = 'none';
+            scheduleText.value = '';
+        }
+
+        // 달력 변경
+        function navigateMonth(direction) {
+            currentDate.setMonth(currentDate.getMonth() + direction);
+            generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+        }
+
+        generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+        renderSchedules();
+    </script>
+</body>
+</html>
